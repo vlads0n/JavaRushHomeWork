@@ -9,6 +9,7 @@ import java.util.List;
  * Created by Влад on 12.05.2016.
  */
 public class FakeModel implements Model {
+
     private ModelData modelData = new ModelData();
 
     @Override
@@ -33,6 +34,11 @@ public class FakeModel implements Model {
 
     @Override
     public void loadUserById(long userId) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void deleteUserById(long userId) {
         throw new UnsupportedOperationException();
     }
 }
