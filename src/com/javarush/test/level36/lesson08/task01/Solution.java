@@ -1,6 +1,9 @@
 package com.javarush.test.level36.lesson08.task01;
 
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.TreeSet;
+
 
 /* Использование TreeSet
 Первым параметром приходит имя файла: файл1.
@@ -26,5 +29,13 @@ abc
 */
 public class Solution {
     public static void main(String[] args) throws IOException {
+        FileReader fileReader = new FileReader(args[0]);
+        TreeSet treeSet = new TreeSet();
+        while(fileReader.ready())
+            ;
+        if (treeSet.size() < 5)
+            System.out.println(treeSet);
+        else
+            System.out.println(treeSet.);
     }
 }
