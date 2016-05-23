@@ -18,6 +18,7 @@
     <orderEntry type="library" name="usb4java-1.2.0" level="application" />
     <orderEntry type="library" name="org.scream3r:jssc:2.8.0" level="application" />
     <orderEntry type="library" name="JavaSources" level="application" />
+    <orderEntry type="library" name="com.google.guava:guava:18.0" level="application" />
   </component>
   <component name="org.twodividedbyzero.idea.findbugs">
     <option name="_basePreferences">
