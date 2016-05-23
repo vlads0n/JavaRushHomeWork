@@ -19,6 +19,10 @@
     <orderEntry type="library" name="org.scream3r:jssc:2.8.0" level="application" />
     <orderEntry type="library" name="JavaSources" level="application" />
     <orderEntry type="library" name="com.google.guava:guava:18.0" level="application" />
+    <orderEntry type="library" name="io.github.endreman0:java-json:0.13.0" level="application" />
+    <orderEntry type="library" name="com.webcohesion.enunciate:enunciate-java-json-client:2.3.0" level="application" />
+    <orderEntry type="library" name="org.jsoup:jsoup:1.9.2" level="application" />
+    <orderEntry type="library" name="com.bluecatcode.junit:junit-4.11-extended:1.0.4" level="application" />
   </component>
   <component name="org.twodividedbyzero.idea.findbugs">
     <option name="_basePreferences">
