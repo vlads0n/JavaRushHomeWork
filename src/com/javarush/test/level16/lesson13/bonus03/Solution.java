@@ -17,6 +17,7 @@ public class Solution {
 
     public static void main(String[] args) {
         TestedThread commonThread = new TestedThread(handler);
+        commonThread.setDefaultUncaughtExceptionHandler(handler);
 
         Thread threadA = new Thread(commonThread, "Нить 1");
         Thread threadB = new Thread(commonThread, "Нить 2");
