@@ -1,7 +1,11 @@
 package com.javarush.test.level16.lesson13.bonus02;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /* Клубок
 1. Создай 5 различных своих нитей c отличным от Thread типом:
@@ -17,4 +21,79 @@ import java.util.List;
 
 public class Solution {
     public static List<Thread> threads = new ArrayList<Thread>(5);
+
+    static {
+        threads.add(new Thread1());
+        threads.add(new Thread2());
+        threads.add(new Thread3());
+        threads.add(new Thread4());
+        threads.add(new Thread5());
+    }
+
+    public static class Thread1 extends Thread {
+        @Override
+        public void run() {
+            while (true){}
+        }
+    }
+
+    public static class Thread2 extends Thread {
+        @Override
+        public void run() {
+            try {
+                while (!isInterrupted())
+                    throw new InterruptedException();
+            } catch (InterruptedException e) {
+                System.out.println("InterruptedException");
+            }
+        }
+    }
+
+    public static class Thread3 extends Thread {
+        @Override
+        public void run() {
+            try {
+                while (true) {
+                    System.out.println("Ура");
+                    sleep(500);
+                }
+            } catch (InterruptedException e) {
+            }
+        }
+    }
+
+    public static class Thread4 extends Thread implements Message {
+        @Override
+        public void run() {
+            while (!isInterrupted()){}
+        }
+
+        @Override
+        public void showWarning() {
+            interrupt();
+            try {
+                join();
+            } catch (InterruptedException e) {
+            }
+        }
+    }
+
+    public static class Thread5 extends Thread {
+        @Override
+        public void run() {
+            String string;
+            int result = 0;
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+            while (!isInterrupted()) {
+                try {
+                    while (!(string = bufferedReader.readLine()).equals("N")) {
+                        result += Integer.parseInt(string);
+                    }
+                    System.out.println(result);
+                } catch (IOException e) {
+                }
+            }
+        }
+    }
+
 }
