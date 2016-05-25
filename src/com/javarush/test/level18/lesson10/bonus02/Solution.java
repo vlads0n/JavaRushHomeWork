@@ -22,48 +22,92 @@ id productName price quantity
 19847983Куртка для сноубордистов, разм10173.991234
 */
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.InputStreamReader;
+
+import java.io.*;
+import java.util.ArrayList;
 
 public class Solution {
     public static void main(String[] args) throws Exception {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        File file = new File(reader.readLine());
-        FileWriter fileWriter = new FileWriter(file, true);
-        if (args.length >= 4) {
-            if (args[0].equals("-c")) {
-                String id = (int) (Math.random() * 100000000) + "";
-                while (id.length() < 8)
-                    id += " ";
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        String fileName = bufferedReader.readLine();
+        bufferedReader.close();
+        PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName, true)));
 
-                String productName = "";
-                for (int i = 1; i < args.length - 2; i++)
-                    productName += args[i] + " ";
-                if (productName.length() > 30)
-                    productName = productName.substring(0, 30);
-                else {
-                    while (productName.length() < 30)
-                        productName += " ";
-                }
-
-                String price = args[args.length - 2];
-                while (price.length() < 8)
-                    price += " ";
-
-                String quantity = args[args.length - 1];
-                while (quantity.length() < 4)
-                    quantity += " ";
-
-                if (file.length() != 0) {
-                    fileWriter.write("\r\n");
-                    fileWriter.write(id + productName + price + quantity);
-                } else
-                    fileWriter.write(id + productName + price + quantity);
-            }
+        if (args[0].equals("-c") && args.length >= 4) {
+            printWriter.println(getId(fileName) + getProductName(args) + getPrice(args) + getQuantity(args));
         }
+
+        printWriter.close();
+    }
+
+    private static String getProductName(String[] args) {
+        String result = "";
+
+        for (int i = 1; i < args.length - 2; i++)
+            result += args[i] + " ";
+
+        while (result.length() < 30)
+            result += " ";
+
+        if (result.length() > 30)
+            return result.substring(0, 30);
+        else
+            return result;
+    }
+
+    private static String getPrice(String[] args) {
+        String result = args[args.length - 2];
+
+        while (result.length() < 8)
+            result += " ";
+
+        if (result.length() > 8)
+            return result.substring(0, 8);
+        else
+            return result;
+    }
+
+    private static String getQuantity(String[] args) {
+        String result = args[args.length - 1];
+
+        while (result.length() < 4)
+            result += " ";
+
+        if (result.length() > 4)
+            return result.substring(0, 4);
+        else
+            return result;
+    }
+
+    private static String getId(String fileName) throws IOException {
+        String result ;
+        ArrayList<Long> listId = new ArrayList<>();
+        BufferedReader reader = new BufferedReader(new FileReader(fileName));
+        String string;
+        Long id;
+        Long maxId = 0L;
+
+        while ((string = reader.readLine()) != null) {
+            id = Long.parseLong(string.substring(0, 8).trim());
+            listId.add(id);
+        }
+
         reader.close();
-        fileWriter.close();
+
+        for (Long i : listId) {
+            if (i > maxId)
+                maxId = i;
+        }
+
+        maxId++;
+        result = maxId + "";
+
+        while (result.length() < 8)
+            result += " ";
+
+        if (result.length() > 8)
+            return result.substring(0, 8);
+        else
+            return result;
     }
 }
