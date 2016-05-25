@@ -3,11 +3,7 @@ package com.javarush.test.level36.lesson08.task01;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.TreeSet;
-<<<<<<< HEAD
 
-
-=======
->>>>>>> origin/master
 /* Использование TreeSet
 Первым параметром приходит имя файла: файл1.
 файл1 содержит только буквы латинского алфавита, пробелы, знаки препинания, тире, символы перевода каретки.
@@ -32,16 +28,6 @@ abc
 */
 public class Solution {
     public static void main(String[] args) throws IOException {
-<<<<<<< HEAD
-        FileReader fileReader = new FileReader(args[0]);
-        TreeSet treeSet = new TreeSet();
-        while(fileReader.ready())
-            ;
-        if (treeSet.size() < 5)
-            System.out.println(treeSet);
-        else
-            System.out.println(treeSet.);
-=======
         FileReader reader = new FileReader(args[0]);
         TreeSet<Character> treeSet = new TreeSet<>();
         String string = "";
@@ -65,6 +51,5 @@ public class Solution {
             System.out.println(result.substring(0, 5));
         else
             System.out.println(result);
->>>>>>> origin/master
     }
 }
