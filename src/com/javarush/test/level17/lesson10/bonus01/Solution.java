@@ -1,8 +1,5 @@
 package com.javarush.test.level17.lesson10.bonus01;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.XPathParser;
-import sun.java2d.pipe.SpanShapeRenderer;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

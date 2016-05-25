@@ -1,8 +1,5 @@
 package com.javarush.test.level36.lesson06.task01;
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/master
 import java.util.Collections;
 
 /* Найти класс по описанию
