@@ -8,7 +8,7 @@ import com.javarush.test.level37.lesson04.big01.male.MaleFactory;
  * Created by Влад on 31.05.2016.
  */
 public class FactoryProducer {
-    public static enum HumanFactoryType {
+    public enum HumanFactoryType {
         MALE,
         FEMALE
     }
