@@ -1,6 +1,5 @@
 package com.javarush.test.level37.lesson04.big01;
 
-import com.javarush.test.level37.lesson04.big01.AbstractFactory;
 import com.javarush.test.level37.lesson04.big01.female.FemaleFactory;
 import com.javarush.test.level37.lesson04.big01.male.MaleFactory;
 
