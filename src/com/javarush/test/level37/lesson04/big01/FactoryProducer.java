@@ -12,7 +12,7 @@ public class FactoryProducer {
         FEMALE
     }
 
-    public static AbstractFactory getFactory(HumanFactoryType type) {
+    public static AbstractFact getFactory(HumanFactoryType type) {
         switch (type) {
             case MALE:
                 return new MaleFactory();

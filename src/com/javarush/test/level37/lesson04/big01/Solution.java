@@ -2,7 +2,7 @@ package com.javarush.test.level37.lesson04.big01;
 
 public class Solution {
     public static void main(String[] args) {
-        AbstractFactory factory = FactoryProducer.getFactory(FactoryProducer.HumanFactoryType.FEMALE);
+        AbstractFact factory = FactoryProducer.getFactory(FactoryProducer.HumanFactoryType.FEMALE);
         useFactory(factory);
 
         factory = FactoryProducer.getFactory(FactoryProducer.HumanFactoryType.MALE);
@@ -17,7 +17,7 @@ TeenBoy{}
          */
     }
 
-    public static void useFactory(AbstractFactory factory) {
+    public static void useFactory(AbstractFact factory) {
         System.out.println(factory.getPerson(99));
         System.out.println(factory.getPerson(4));
         System.out.println(factory.getPerson(15));
