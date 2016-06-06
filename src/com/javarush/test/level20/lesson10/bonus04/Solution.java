@@ -420,8 +420,12 @@ public class Solution extends AbstractList<String> implements List<String>, Clon
         s.writeInt(heapSize);
 
         // Write out all elements in the proper order.
-        for (Node<String> aHeap : heap)
-            s.writeObject(aHeap.item);
+        for (Node<String> aHeap : heap) {
+            if (aHeap != null)
+                s.writeObject(aHeap.item);
+            else
+                s.writeObject(null);
+        }
     }
 
     private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
@@ -430,26 +434,31 @@ public class Solution extends AbstractList<String> implements List<String>, Clon
 
         // Read in size
         int size = s.readInt();
+        clear();
 
         // Read in all elements in the proper order.
-        for (int i = 0; i < size; i++)
-            add((String) s.readObject());
+        for (int i = 0; i < size; i++) {
+            String element;
+            if ((element = (String) s.readObject()) != null)
+                add(element);
+        }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         List<String> list = new Solution();
         for (int i = 1; i < 16; i++) {
            list.add(String.valueOf(i));
         }
         System.out.println(list);
-        list.remove("2");
-        list.remove("9");
+        list.remove("5");
         System.out.println(list);
-        list.add("16");
-        list.add("17");
-        list.add("18");
-        list.add("19");
-        list.add("20");
-        System.out.println(list);
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+        objectOutputStream.writeObject(list);
+
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+        System.out.println(objectInputStream.readObject());
     }
 }
