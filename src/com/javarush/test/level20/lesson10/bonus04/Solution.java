@@ -1,7 +1,6 @@
 package com.javarush.test.level20.lesson10.bonus04;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.*;
 
 /* Свой список
@@ -237,10 +236,12 @@ public class Solution extends AbstractList<String> implements List<String>, Clon
     public String getParent(String value) {
         String parent = null;
 
-       for (int i = 0; i < heapSize; i++) {
-            if (heap.get(i) != null && heap.get(i).item.equals(value))
-                parent = heap.get(i).parent.item;
-       }
+        for (Node<String> aHeap : heap){
+             if (aHeap != null && aHeap.item.equals(value)) {
+                 parent = aHeap.parent.item;
+                 break;
+             }
+        }
 
         if (parent != null && parent.equals("0"))
             return null;
@@ -412,53 +413,58 @@ public class Solution extends AbstractList<String> implements List<String>, Clon
         return null;
     }
 
-    private void writeObject(ObjectOutputStream s) throws IOException {
-        // Write out any hidden serialization magic
-        s.defaultWriteObject();
-
-        // Write out size
-        s.writeInt(heapSize);
-
-        // Write out all elements in the proper order.
-        for (Node<String> aHeap : heap) {
-            if (aHeap != null)
-                s.writeObject(aHeap.item);
-            else
-                s.writeObject(null);
-        }
-    }
-
-    private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
-        // Read in any hidden serialization magic
-        s.defaultReadObject();
-
-        // Read in size
-        int size = s.readInt();
-        clear();
-
-        // Read in all elements in the proper order.
-        for (int i = 0; i < size; i++) {
-            String element;
-            if ((element = (String) s.readObject()) != null)
-                add(element);
-        }
-    }
-
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, CloneNotSupportedException {
         List<String> list = new Solution();
         for (int i = 1; i < 16; i++) {
            list.add(String.valueOf(i));
         }
+
+        System.out.print("Iterator1: ");
+        for (String aList : list)
+            System.out.print(aList + " ");
+        System.out.println();
         System.out.println(list);
+
+        System.out.println("After remove: ");
         list.remove("5");
         System.out.println(list);
 
+        System.out.println("Get parent: ");
+        System.out.println("8: " + ((Solution) list).getParent("8"));
+        System.out.println("2: " + ((Solution) list).getParent("2"));
+        System.out.println("7: " + ((Solution) list).getParent("7"));
+        System.out.println("15: " + ((Solution) list).getParent("15"));
+        System.out.println("3: " + ((Solution) list).getParent("3"));
+        System.out.println("11: " + ((Solution) list).getParent("11"));
+        System.out.println();
+
+        System.out.println("Serialization/Deserialization: ");
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
         objectOutputStream.writeObject(list);
+        objectOutputStream.close();
+        byteArrayOutputStream.close();
 
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
         ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-        System.out.println(objectInputStream.readObject());
+        List<String> list2 = (Solution) objectInputStream.readObject();
+        System.out.println(list2);
+        objectInputStream.close();
+        byteArrayInputStream.close();
+
+        System.out.println("Cloneable: ");
+        List<String> list3 = ((Solution) list).clone();
+        System.out.println(list3);
+
+        System.out.println("Iterator2: ");
+        Iterator<String> iterator = list.iterator();
+        while (iterator.hasNext())
+            if (iterator.next().equals("6"))
+                iterator.remove();
+        System.out.println(list);
+
+        System.out.println("Clear: ");
+        list.clear();
+        System.out.println(list);
     }
 }
