@@ -21,7 +21,7 @@ public class Solution {
                 {'m', 'l', 'p', 'r', 'r', 'h'},
                 {'p', 'o', 'e', 'e', 'j', 'j'}
         };
-        List<Word> list = detectAllWords(crossword, "home", "same");
+        List<Word> list = detectAllWords(crossword, "plm");
         for (Word word : list)
             System.out.println(word.toString());
         /*
@@ -36,7 +36,7 @@ same - (1, 1) - (4, 1)
         String result;
         int tmpX;
         int tmpY;
-        boolean wordIsSearch;
+        boolean wordIsSearch = false;
         List<Word> wordList = new ArrayList<>();
         for (String word : words) {
             text = new Word(word);
@@ -48,14 +48,14 @@ same - (1, 1) - (4, 1)
                         for (int i = 1; i <= 8; i++) {
                             tmpX = x;
                             tmpY = y;
-                            result = "";
+                            result = (char) crossword[y][x] + "";
                             switch (i) {
                                 case 1:
                                     try {
-                                        for (int j = 0; j < word.length(); j++) {
-                                            result += (char) crossword[tmpY][tmpX] + "";
+                                        for (int j = 1; j < word.length(); j++) {
                                             tmpX++;
                                             tmpY--;
+                                            result += (char) crossword[tmpY][tmpX] + "";
                                         }
                                         if (result.equals(word)) {
                                             text.setEndPoint(tmpX, tmpY);
@@ -68,9 +68,9 @@ same - (1, 1) - (4, 1)
                                     }
                                 case 2:
                                     try {
-                                        for (int j = 0; j < word.length(); j++) {
-                                            result += (char) crossword[tmpY][tmpX] + "";
+                                        for (int j = 1; j < word.length(); j++) {
                                             tmpX++;
+                                            result += (char) crossword[tmpY][tmpX] + "";
                                         }
                                         if (result.equals(word)) {
                                             text.setEndPoint(tmpX, tmpY);
@@ -83,10 +83,10 @@ same - (1, 1) - (4, 1)
                                     }
                                 case 3:
                                     try {
-                                        for (int j = 0; j < word.length(); j++) {
-                                            result += (char) crossword[tmpY][tmpX] + "";
+                                        for (int j = 1; j < word.length(); j++) {
                                             tmpX++;
                                             tmpY++;
+                                            result += (char) crossword[tmpY][tmpX] + "";
                                         }
                                         if (result.equals(word)) {
                                             text.setEndPoint(tmpX, tmpY);
@@ -99,9 +99,9 @@ same - (1, 1) - (4, 1)
                                     }
                                 case 4:
                                     try {
-                                        for (int j = 0; j < word.length(); j++) {
-                                            result += (char) crossword[tmpY][tmpX] + "";
+                                        for (int j = 1; j < word.length(); j++) {
                                             tmpY++;
+                                            result += (char) crossword[tmpY][tmpX] + "";
                                         }
                                         if (result.equals(word)) {
                                             text.setEndPoint(tmpX, tmpY);
@@ -114,10 +114,10 @@ same - (1, 1) - (4, 1)
                                     }
                                 case 5:
                                     try {
-                                        for (int j = 0; j < word.length(); j++) {
-                                            result += (char) crossword[tmpY][tmpX] + "";
+                                        for (int j = 1; j < word.length(); j++) {
                                             tmpX--;
                                             tmpY++;
+                                            result += (char) crossword[tmpY][tmpX] + "";
                                         }
                                         if (result.equals(word)) {
                                             text.setEndPoint(tmpX, tmpY);
@@ -130,9 +130,9 @@ same - (1, 1) - (4, 1)
                                     }
                                 case 6:
                                     try {
-                                        for (int j = 0; j < word.length(); j++) {
-                                            result += (char) crossword[tmpY][tmpX] + "";
+                                        for (int j = 1; j < word.length(); j++) {
                                             tmpX--;
+                                            result += (char) crossword[tmpY][tmpX] + "";
                                         }
                                         if (result.equals(word)) {
                                             text.setEndPoint(tmpX, tmpY);
@@ -145,10 +145,10 @@ same - (1, 1) - (4, 1)
                                     }
                                 case 7:
                                     try {
-                                        for (int j = 0; j < word.length(); j++) {
-                                            result += (char) crossword[tmpY][tmpX] + "";
+                                        for (int j = 1; j < word.length(); j++) {
                                             tmpX--;
                                             tmpY--;
+                                            result += (char) crossword[tmpY][tmpX] + "";
                                         }
                                         if (result.equals(word)) {
                                             text.setEndPoint(tmpX, tmpY);
@@ -161,9 +161,9 @@ same - (1, 1) - (4, 1)
                                     }
                                 case 8:
                                     try {
-                                        for (int j = 0; j < word.length(); j++) {
-                                            result += (char) crossword[tmpY][tmpX] + "";
+                                        for (int j = 1; j < word.length(); j++) {
                                             tmpY--;
+                                            result += (char) crossword[tmpY][tmpX] + "";
                                         }
                                         if (result.equals(word)) {
                                             text.setEndPoint(tmpX, tmpY);
@@ -177,9 +177,13 @@ same - (1, 1) - (4, 1)
                             }
                         }
                     }
-                    if (wordIsSearch)
+                    if (wordIsSearch) {
                         wordList.add(text);
+                        break;
+                    }
                 }
+                if (wordIsSearch)
+                    break;
             }
         }
         return wordList;
