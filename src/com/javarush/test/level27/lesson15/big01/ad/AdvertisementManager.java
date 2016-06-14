@@ -59,7 +59,7 @@ public class AdvertisementManager
         }
     }
 
-    public List<Advertisement> recursive(List<Advertisement> list, int time)
+    private List<Advertisement> recursive(List<Advertisement> list, int time)
     {
         ArrayList<Advertisement> tempList = new ArrayList<>();
         for (Advertisement advertisement : list)

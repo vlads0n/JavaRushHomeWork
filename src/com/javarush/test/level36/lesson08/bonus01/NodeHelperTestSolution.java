@@ -47,4 +47,16 @@ public class NodeHelperTestSolution {
         field.setAccessible(true);
         return (RedBlackTree.Node) field.get(RedBlackTree.class);
     }
+
+    public static RedBlackTree.Color getNodeColor(RedBlackTree.Node node) throws NoSuchFieldException, IllegalAccessException {
+        Field colorField = node.getClass().getDeclaredField("color");
+        colorField.setAccessible(true);
+        return (RedBlackTree.Color) colorField.get(node);
+    }
+
+    public static int getNodeIntValue(RedBlackTree.Node node) throws IllegalAccessException, NoSuchFieldException {
+        Field nodeFiled = node.getClass().getDeclaredField("element");
+        nodeFiled.setAccessible(true);
+        return nodeFiled.getInt(node);
+    }
 }

@@ -15,8 +15,8 @@ public class Solution {
     }
 
     public static Number[] getData() {
-        Number[] numberArray;
-        return null;
+        Number[] numberArray = new Number[0];
+        return numberArray;
     }
 
     public static void addDataToList(List<Number> list, Number... data) {
