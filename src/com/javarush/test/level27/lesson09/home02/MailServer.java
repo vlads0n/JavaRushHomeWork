@@ -8,10 +8,16 @@ public class MailServer implements Runnable {
     }
 
     @Override
-    public synchronized void run() {
+    public synchronized void run()  {
         long beforeTime = System.currentTimeMillis();
-        while (mail.getText() == null)
-            notifyAll();
+        synchronized (mail) {
+            while (mail.getText() == null)
+                try {
+                    mail.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+        }
         String name = Thread.currentThread().getName();
         long afterTime = System.currentTimeMillis();
         System.out.format("%s MailServer has got: [%s] in %d ms after start", name, mail.getText(), (afterTime - beforeTime));
