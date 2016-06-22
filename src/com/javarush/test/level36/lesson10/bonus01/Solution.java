@@ -59,7 +59,7 @@ public class Solution {
                     int rb = 0;
                     int chunk = 0;
                     try {
-                        while (((int) size - rb) > 0) {
+                        while ((size - rb) > 0) {
                             chunk = bis.read(b, rb, size - rb);
                             if (chunk == -1) {
                                 break;
