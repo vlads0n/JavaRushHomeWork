@@ -41,4 +41,8 @@ public class Order
             result = result + i.getDuration();
         return result;
     }
+
+    public List<Dish> getDishes() {
+        return dishes;
+    }
 }

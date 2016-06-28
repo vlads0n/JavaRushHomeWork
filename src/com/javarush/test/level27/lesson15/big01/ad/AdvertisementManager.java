@@ -1,6 +1,8 @@
 package com.javarush.test.level27.lesson15.big01.ad;
 
 import com.javarush.test.level27.lesson15.big01.ConsoleHelper;
+import com.javarush.test.level27.lesson15.big01.statistic.StatisticManager;
+import com.javarush.test.level27.lesson15.big01.statistic.event.VideoSelectedEventDataRow;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,6 +55,16 @@ public class AdvertisementManager
 
         if (advertisements.isEmpty())
             throw new NoVideoAvailableException();
+
+        int totalAmount = 0;
+        int totalDuration = 0;
+        for (Advertisement advertisement : advertisements) {
+            totalAmount += advertisement.getAmountPerOneDisplaying();
+            totalDuration += advertisement.getDuration();
+        }
+
+        VideoSelectedEventDataRow videoSelectedEventDataRow = new VideoSelectedEventDataRow(advertisements, totalAmount, totalDuration);
+        StatisticManager.getInstance().register(videoSelectedEventDataRow);
 
         for (Advertisement advertisement : advertisements)
         {

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Vinnik on 22.06.2016.
  */
-public class CookedOrderEventDataRow {
+public class CookedOrderEventDataRow implements EventDataRow {
     private String tabletName;
     private String cookName;
     private int cookingTimeSeconds;
@@ -16,10 +16,15 @@ public class CookedOrderEventDataRow {
     private Date currentDate;
 
     public CookedOrderEventDataRow(String tabletName, String cookName, int cookingTimeSeconds, List<Dish> cookingDishs) {
-        this.tabletName = tabletName.toString();
+        this.tabletName = tabletName;
         this.cookName = cookName;
         this.cookingTimeSeconds = cookingTimeSeconds;
         this.cookingDishs = cookingDishs;
         this.currentDate = new Date();
+    }
+
+    @Override
+    public EventType getType() {
+        return EventType.COOKED_ORDER;
     }
 }

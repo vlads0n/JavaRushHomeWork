@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Vinnik on 22.06.2016.
  */
-public class VideoSelectedEventDataRow {
+public class VideoSelectedEventDataRow implements EventDataRow {
     private List<Advertisement> optimalVideoSet;
     private long amount;
     private int totalDuration;
@@ -19,5 +19,10 @@ public class VideoSelectedEventDataRow {
         this.amount = amount;
         this.totalDuration = totalDuration;
         this.currentDate = new Date();
+    }
+
+    @Override
+    public EventType getType() {
+        return EventType.SELECTED_VIDEOS;
     }
 }

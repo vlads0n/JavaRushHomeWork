@@ -5,12 +5,17 @@ import java.util.Date;
 /**
  * Created by Vinnik on 22.06.2016.
  */
-public class NoAvailableVideoEventDataRow {
+public class NoAvailableVideoEventDataRow implements EventDataRow {
     private int totalDuration;
     private Date currentDate;
 
     public NoAvailableVideoEventDataRow(int totalDuration) {
         this.totalDuration = totalDuration;
         this.currentDate = new Date();
+    }
+
+    @Override
+    public EventType getType() {
+        return EventType.NO_AVAILABLE_VIDEO;
     }
 }
