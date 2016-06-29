@@ -12,16 +12,16 @@ import java.util.*;
 /**
  * Created by Vinnik on 22.06.2016.
  */
-public class StatisticManager {
-    private static StatisticManager ourInstance = new StatisticManager();
+public class StatisticEventManager {
+    private static StatisticEventManager ourInstance = new StatisticEventManager();
     private StatisticStorage statisticStorage = new StatisticStorage();
     private Set<Cook> cooks = new HashSet<>();
 
-    public static StatisticManager getInstance() {
+    public static StatisticEventManager getInstance() {
         return ourInstance;
     }
 
-    private StatisticManager() {
+    private StatisticEventManager() {
     }
 
     public void register(EventDataRow data) {
