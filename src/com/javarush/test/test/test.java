@@ -7,6 +7,5 @@ package com.javarush.test.test;
 public class test
 {
     public static void main(String[] args) {
-
     }
 }

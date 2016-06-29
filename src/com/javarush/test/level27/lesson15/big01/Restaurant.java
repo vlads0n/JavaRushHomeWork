@@ -13,15 +13,25 @@ public class Restaurant
     {
         Tablet tablet = new Tablet(5);
         Tablet tablet1 = new Tablet(6);
+        Tablet tablet2 = new Tablet(7);
+
         Cook cook = new Cook("Amigo");
         Cook cook1 = new Cook("Vlad");
+        Cook cook2 = new Cook("Alli");
+
         Waitor waitor = new Waitor();
+
         tablet1.addObserver(cook1);
         tablet.addObserver(cook);
+        tablet2.addObserver(cook2);
+
         cook1.addObserver(waitor);
         cook.addObserver(waitor);
+        cook2.addObserver(waitor);
+
         tablet1.createOrder();
         tablet.createOrder();
+        tablet2.createOrder();
 
         DirectorTablet directorTablet = new DirectorTablet();
         directorTablet.printAdvertisementProfit();

@@ -6,7 +6,6 @@ import com.javarush.test.level27.lesson15.big01.statistic.event.EventDataRow;
 import com.javarush.test.level27.lesson15.big01.statistic.event.EventType;
 import com.javarush.test.level27.lesson15.big01.statistic.event.VideoSelectedEventDataRow;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -50,37 +49,44 @@ public class StatisticManager {
         }
     }
 
-    public Map<String, Double> reportAdvertisementProfit() {
-        Map<String, Double> resultMap = new TreeMap<>(Collections.reverseOrder());
+    public Map<Date, Double> reportAdvertisementProfit() {
+        Map<Date, Double> resultMap = new TreeMap<>(Collections.reverseOrder());
         List<EventDataRow> list = statisticStorage.getList(EventType.SELECTED_VIDEOS);
         for (EventDataRow eventDataRow : list) {
-            String date = getDate(eventDataRow.getDate());
-            if (resultMap.get(date) != null)
-                resultMap.put(date, resultMap.get(date) + 0.01d * ((VideoSelectedEventDataRow) eventDataRow).getAmount());
+            Date date = getDate(eventDataRow.getDate());
+            VideoSelectedEventDataRow videoSelectedEventDataRow = (VideoSelectedEventDataRow) eventDataRow;
+            if (resultMap.containsKey(date))
+                resultMap.put(date, resultMap.get(date) + 0.01d * (double) videoSelectedEventDataRow.getAmount());
             else
-                resultMap.put(date, 0.01d * ((VideoSelectedEventDataRow) eventDataRow).getAmount());
+                resultMap.put(date, 0.01d * (double) videoSelectedEventDataRow.getAmount());
         }
         return resultMap;
     }
 
-    public Map<String, Map<String, Double>> cookWorkDuration() {
-        Map<String, Map<String, Double>> resultMap = new TreeMap<>(Collections.reverseOrder());
+    public Map<Date, Map<String, Double>> cookWorkDuration() {
+        Map<Date, Map<String, Double>> resultMap = new TreeMap<>(Collections.reverseOrder());
         Map<String, Double> cookMap = new TreeMap<>();
         List<EventDataRow> list = statisticStorage.getList(EventType.COOKED_ORDER);
         for (EventDataRow eventDataRow : list) {
-            String date = getDate(eventDataRow.getDate());
-            String cookName = ((CookedOrderEventDataRow) eventDataRow).getCookName();
-            if (cookMap.get(cookName) != null)
-                cookMap.put(cookName, cookMap.get(cookName) + eventDataRow.getTime());
+            Date date = getDate(eventDataRow.getDate());
+            CookedOrderEventDataRow cookedOrderEventDataRow = (CookedOrderEventDataRow) eventDataRow;
+            String cookName = cookedOrderEventDataRow.getCookName();
+            if (cookMap.containsKey(cookName))
+                cookMap.put(cookName, cookMap.get(cookName) + (double) cookedOrderEventDataRow.getTime());
             else
-                cookMap.put(cookName, (double) eventDataRow.getTime());
+                cookMap.put(cookName, (double) cookedOrderEventDataRow.getTime());
             resultMap.put(date, cookMap);
         }
         return resultMap;
     }
 
-    private String getDate (Date date) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
-        return simpleDateFormat.format(date);
+    private Date getDate (Date date) {
+        GregorianCalendar gregorianCalendar = new GregorianCalendar();
+        gregorianCalendar.setTime(date);
+        gregorianCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        gregorianCalendar.set(Calendar.MINUTE, 0);
+        gregorianCalendar.set(Calendar.SECOND, 0);
+        gregorianCalendar.set(Calendar.MILLISECOND, 0);
+        return gregorianCalendar.getTime();
     }
 }
