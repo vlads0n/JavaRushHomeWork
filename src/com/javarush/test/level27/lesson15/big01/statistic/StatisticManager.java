@@ -63,18 +63,32 @@ public class StatisticManager {
         return resultMap;
     }
 
-    public Map<Date, Map<String, Double>> cookWorkDuration() {
-        Map<Date, Map<String, Double>> resultMap = new TreeMap<>(Collections.reverseOrder());
-        Map<String, Double> cookMap = new TreeMap<>();
+    public Map<Date, Map<String, Integer>> cookWorkDuration() {
+        Map<Date, Map<String, Integer>> resultMap = new TreeMap<>(Collections.reverseOrder());
+        Map<String, Integer> cookMap = new TreeMap<>();
         List<EventDataRow> list = statisticStorage.getList(EventType.COOKED_ORDER);
         for (EventDataRow eventDataRow : list) {
             Date date = getDate(eventDataRow.getDate());
             CookedOrderEventDataRow cookedOrderEventDataRow = (CookedOrderEventDataRow) eventDataRow;
             String cookName = cookedOrderEventDataRow.getCookName();
-            if (cookMap.containsKey(cookName))
-                cookMap.put(cookName, cookMap.get(cookName) + (double) cookedOrderEventDataRow.getTime());
+            int time = cookedOrderEventDataRow.getTime();
+            if (time % 60 == 0)
+                time /= 60;
             else
-                cookMap.put(cookName, (double) cookedOrderEventDataRow.getTime());
+                time /= 60 + 1;
+            if (resultMap.containsKey(date)) {
+                if (cookMap.containsKey(cookName))
+                    cookMap.put(cookName, cookMap.get(cookName) + time);
+                else
+                    cookMap.put(cookName, time);
+            }
+            else {
+                cookMap = new TreeMap<>();
+                if (cookMap.containsKey(cookName))
+                    cookMap.put(cookName, cookMap.get(cookName) + time);
+                else
+                    cookMap.put(cookName, time);
+            }
             resultMap.put(date, cookMap);
         }
         return resultMap;

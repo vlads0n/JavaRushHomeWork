@@ -19,11 +19,11 @@ public class Restaurant
         Cook cook1 = new Cook("Vlad");
         Cook cook2 = new Cook("Alli");
 
-        Waitor waitor = new Waitor();
-
         tablet1.addObserver(cook1);
         tablet.addObserver(cook);
         tablet2.addObserver(cook2);
+
+        Waitor waitor = new Waitor();
 
         cook1.addObserver(waitor);
         cook.addObserver(waitor);

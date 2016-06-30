@@ -1,5 +1,6 @@
 package com.javarush.test.level27.lesson15.big01;
 
+import com.javarush.test.level27.lesson15.big01.ad.AdvertisementManager;
 import com.javarush.test.level27.lesson15.big01.ad.NoVideoAvailableException;
 import com.javarush.test.level27.lesson15.big01.kitchen.Order;
 
@@ -32,6 +33,7 @@ public class Tablet extends Observable
                 setChanged();
                 notifyObservers(order);
             }
+            new AdvertisementManager(order.getTotalCookingTime() * 60).processVideos();
         }
         catch (NoVideoAvailableException e)
         {

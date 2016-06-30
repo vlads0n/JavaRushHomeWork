@@ -23,11 +23,10 @@ public class DirectorTablet {
     }
 
     public void printCookWorkloading() {
-        for (Map.Entry<Date, Map<String, Double>> pair : StatisticManager.getInstance().cookWorkDuration().entrySet()) {
+        for (Map.Entry<Date, Map<String, Integer>> pair : StatisticManager.getInstance().cookWorkDuration().entrySet()) {
             ConsoleHelper.writeMessage(simpleDateFormat.format(pair.getKey()));
-            for (Map.Entry<String, Double> cook : pair.getValue().entrySet()) {
-                if (cook.getValue() != null)
-                    ConsoleHelper.writeMessage(String.format(Locale.ENGLISH, "%s - %.0f min", cook.getKey(), Math.ceil(cook.getValue() / 60)));
+            for (Map.Entry<String, Integer> cook : pair.getValue().entrySet()) {
+                ConsoleHelper.writeMessage(String.format(Locale.ENGLISH, "%s - %d min", cook.getKey(), cook.getValue()));
             }
             ConsoleHelper.writeMessage("");
         }

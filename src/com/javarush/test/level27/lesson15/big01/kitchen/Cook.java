@@ -32,8 +32,6 @@ public class Cook extends Observable implements Observer
     public void update(Observable observable, Object arg)
     {
         ConsoleHelper.writeMessage("Start cooking - " + arg + ", cooking time " + ((Order) arg).getTotalCookingTime() + "min");
-        new AdvertisementManager(((Order) arg).getTotalCookingTime() * 60).processVideos();
-
         CookedOrderEventDataRow eventDataRow = new CookedOrderEventDataRow(observable.toString(), name, ((Order) arg).getTotalCookingTime() * 60, ((Order) arg).getDishes());
         StatisticManager.getInstance().register(eventDataRow);
 
