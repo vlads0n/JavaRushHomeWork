@@ -11,13 +11,13 @@ import java.util.List;
  */
 public class Order
 {
-    private List<Dish> dishes;
+    protected List<Dish> dishes;
     private Tablet tablet;
 
     public Order(Tablet tablet) throws IOException
     {
         this.tablet = tablet;
-        this.dishes = ConsoleHelper.getAllDishesForOrder();
+        initDishes();
     }
 
     @Override
@@ -44,5 +44,10 @@ public class Order
 
     public List<Dish> getDishes() {
         return dishes;
+    }
+
+    protected void initDishes() throws IOException {
+        ConsoleHelper.writeMessage(Dish.allDishesToString());
+        this.dishes = ConsoleHelper.getAllDishesForOrder();
     }
 }
