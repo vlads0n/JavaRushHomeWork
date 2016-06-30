@@ -36,7 +36,7 @@ public class DirectorTablet {
 
     public void printActiveVideoSet() {
         for (Advertisement advertisement : StatisticAdvertisementManager.getInstance().getActiveAdvertisement())
-            ConsoleHelper.writeMessage(String.format(Locale.ENGLISH, "%s - %d", advertisement.getName(), advertisement.getHits()));
+            ConsoleHelper.writeMessage(advertisement.getName() + " - " + advertisement.getHits());
     }
 
     public void printArchivedVideoSet() {
