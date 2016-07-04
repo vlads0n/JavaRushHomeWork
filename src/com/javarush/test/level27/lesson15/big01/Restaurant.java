@@ -6,6 +6,7 @@ import com.javarush.test.level27.lesson15.big01.statistic.StatisticEventManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -13,10 +14,11 @@ import java.util.List;
  */
 public class Restaurant
 {
-    private final static int ORDER_CREATING_INTERVAL = 100;
+    private static final int ORDER_CREATING_INTERVAL = 100;
 
     public static void main(String[] args)
     {
+        Locale.setDefault(Locale.ENGLISH);
         Cook cook1 = new Cook("Amigo");
         Cook cook2 = new Cook("Lilla");
         StatisticEventManager.getInstance().register(cook1);
@@ -27,15 +29,15 @@ public class Restaurant
         cook1.addObserver(waitor);
         cook2.addObserver(waitor);
 
-        List<Tablet> tabletList = new ArrayList<>();
-        for (int i = 1; i <= 5; i++) {
+        List<Tablet> tablets = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
             Tablet tablet = new Tablet(i);
-            tabletList.add(tablet);
+            tablets.add(tablet);
             tablet.addObserver(cook1);
             tablet.addObserver(cook2);
         }
 
-        RandomOrderGeneratorTask randomOrderGeneratorTask = new RandomOrderGeneratorTask(tabletList, ORDER_CREATING_INTERVAL);
+        RandomOrderGeneratorTask randomOrderGeneratorTask = new RandomOrderGeneratorTask(tablets, ORDER_CREATING_INTERVAL);
         Thread thread = new Thread(randomOrderGeneratorTask);
         thread.start();
         try {
