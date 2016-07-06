@@ -22,9 +22,7 @@ public class Cook extends Observable implements Observer
     @Override
     public String toString()
     {
-        return "Cook{" +
-                "name='" + name + '\'' +
-                '}';
+        return name;
     }
 
     @Override

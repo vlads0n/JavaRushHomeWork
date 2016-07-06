@@ -32,7 +32,7 @@ public class Restaurant
         List<Tablet> tablets = new ArrayList<>();
         Tablet tablet;
         for (int i = 0; i < 5; i++) {
-            tablet = new Tablet(i);
+            tablet = new Tablet(i + 1);
             tablets.add(tablet);
             tablet.addObserver(cook1);
             tablet.addObserver(cook2);

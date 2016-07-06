@@ -10,8 +10,8 @@ public class RandomOrderGeneratorTask implements Runnable {
     private List<Tablet> tablets;
 
     public RandomOrderGeneratorTask(List<Tablet> tablets, int interval) {
-        this.interval = interval;
         this.tablets = tablets;
+        this.interval = interval;
     }
 
     @Override
@@ -22,7 +22,7 @@ public class RandomOrderGeneratorTask implements Runnable {
             try {
                 Thread.sleep(interval);
             } catch (InterruptedException e) {
-                return;
+                break;
             }
         }
     }

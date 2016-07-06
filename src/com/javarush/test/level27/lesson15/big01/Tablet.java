@@ -25,14 +25,12 @@ public class Tablet extends Observable
 
     public void createOrder()
     {
-        Order order = null;
         try {
-            order = new Order(this);
+            Order order = new Order(this);
+            orderToString(order);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Console is unavailable.");
         }
-        orderToString(order);
-
     }
 
     private void orderToString(Order order) {
@@ -52,13 +50,12 @@ public class Tablet extends Observable
     }
 
     public void createTestOrder() {
-        TestOrder order = null;
         try {
-            order = new TestOrder(this);
+            TestOrder order = new TestOrder(this);
+            orderToString(order);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Console is unavailable.");
         }
-        orderToString(order);
     }
 
     @Override

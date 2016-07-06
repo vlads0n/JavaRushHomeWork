@@ -38,7 +38,7 @@ public class Order
     {
         int result = 0;
         for (Dish i : dishes)
-            result = result + i.getDuration();
+            result += i.getDuration();
         return result;
     }
 
@@ -48,6 +48,6 @@ public class Order
 
     protected void initDishes() throws IOException {
         ConsoleHelper.writeMessage(Dish.allDishesToString());
-        this.dishes = ConsoleHelper.getAllDishesForOrder();
+        dishes = ConsoleHelper.getAllDishesForOrder();
     }
 }
