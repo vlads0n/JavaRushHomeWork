@@ -30,17 +30,44 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Solution {
-    public static void main(String[] args) throws IOException {
+    static String openTag;
+    static String closingTag;
+    static String string;
+    static List<String> result = new ArrayList<>();
+
+    public static void main(String[] args) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        FileReader fileReader = new FileReader(reader.readLine());
-        String result = "";
-        String openTag = "<" + args[0] + ">";
-        String closeTag = "</" + args[0] + ">";
-        while (fileReader.ready())
-            result += (char)fileReader.read();
-        result = result.replaceAll("\\r\\n", "");
-        int index = result.indexOf(openTag);
+        StringBuilder stringBuilder = new StringBuilder();
+        try  (FileReader fileReader = new FileReader(reader.readLine())){
+            while (fileReader.ready())
+                stringBuilder = stringBuilder.append((char) fileReader.read());
+        }
+        catch (IOException e) {}
+
+        openTag = "<" + args[0];
+        closingTag = "</" + args[0];
+        string = stringBuilder.toString().replaceAll("\\r\\n", "");
+
+        int indexOfOpenTag = string.indexOf(openTag);
+        int indexOfClosingTag = string.indexOf(closingTag);
+        List<String> tagList = recursive(indexOfOpenTag, indexOfClosingTag);
+
+        for (String tag : tagList)
+            System.out.println(tag);
+    }
+        public static List<String> recursive(int indexOfOpenTag, int indexOfClosingTag) {
+            if (string.substring(indexOfOpenTag + 4, indexOfClosingTag).contains(openTag)) {
+                int newIndexOfOpenTag = string.indexOf(openTag, indexOfOpenTag + 5);
+                recursive(newIndexOfOpenTag, indexOfClosingTag);
+                int newIndexOfClosingTag = string.indexOf(closingTag, indexOfClosingTag + 7);
+                recursive(indexOfOpenTag, newIndexOfClosingTag);
+            }
+            else
+                result.add(string.substring(indexOfOpenTag, indexOfClosingTag + 7));
+        return result;
     }
 }
