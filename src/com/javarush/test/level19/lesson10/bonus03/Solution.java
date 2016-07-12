@@ -31,43 +31,56 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Solution {
-    static String openTag;
-    static String closingTag;
-    static String string;
-    static List<String> result = new ArrayList<>();
-
     public static void main(String[] args) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder stringBuilder = new StringBuilder();
         try  (FileReader fileReader = new FileReader(reader.readLine())){
             while (fileReader.ready())
                 stringBuilder = stringBuilder.append((char) fileReader.read());
+            reader.close();
         }
         catch (IOException e) {}
 
-        openTag = "<" + args[0];
-        closingTag = "</" + args[0];
-        string = stringBuilder.toString().replaceAll("\\r\\n", "");
+        String openTag = "<" + args[0];
+        String closingTag = "</" + args[0];
+        int tagLength = args[0].length();
+        String string = stringBuilder.toString().replaceAll("\r\n", "");
+        ArrayList<Integer> openTagList = new ArrayList<>();
+        ArrayList<Integer> closingTagList = new ArrayList<>();
+        int count = 0;
+        int indexOfOpenTag;
+        int indexOfClosingTag = 0;
 
-        int indexOfOpenTag = string.indexOf(openTag);
-        int indexOfClosingTag = string.indexOf(closingTag);
-        List<String> tagList = recursive(indexOfOpenTag, indexOfClosingTag);
-
-        for (String tag : tagList)
-            System.out.println(tag);
-    }
-        public static List<String> recursive(int indexOfOpenTag, int indexOfClosingTag) {
-            if (string.substring(indexOfOpenTag + 4, indexOfClosingTag).contains(openTag)) {
-                int newIndexOfOpenTag = string.indexOf(openTag, indexOfOpenTag + 5);
-                recursive(newIndexOfOpenTag, indexOfClosingTag);
-                int newIndexOfClosingTag = string.indexOf(closingTag, indexOfClosingTag + 7);
-                recursive(indexOfOpenTag, newIndexOfClosingTag);
+        while (indexOfClosingTag != -1) {
+            indexOfOpenTag = string.indexOf(openTag, count);
+            indexOfClosingTag = string.indexOf(closingTag, count);
+            if (indexOfOpenTag < indexOfClosingTag && indexOfOpenTag != -1)
+            {
+                openTagList.add(indexOfOpenTag);
+                closingTagList.add(null);
+                count = indexOfOpenTag + tagLength + 2;
             }
             else
-                result.add(string.substring(indexOfOpenTag, indexOfClosingTag + 7));
-        return result;
+            {
+                for (int i = closingTagList.size() - 1; i >= 0; i--) {
+                    if (closingTagList.get(i) == null) {
+                        closingTagList.set(i, indexOfClosingTag);
+                        break;
+                    }
+                }
+                count = indexOfClosingTag + tagLength + 3;
+            }
+        }
+
+        for (int i = 0; i < openTagList.size(); i++) {
+            char isLetter = string.charAt(openTagList.get(i) + tagLength + 1);
+            if (isLetter == '>' || isLetter == ' ')
+                System.out.println(string.substring(openTagList.get(i), closingTagList.get(i) + tagLength + 3));
+            else
+                System.out.println(string.substring(openTagList.get(i), openTagList.get(i) + tagLength + 1) +
+                        " " + string.substring(openTagList.get(i) + tagLength + 1, closingTagList.get(i) + tagLength + 3));
+        }
     }
 }

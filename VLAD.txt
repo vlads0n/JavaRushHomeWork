@@ -1,2 +1,5 @@
-<span xml:lang="en" lang="en"><b><span>Turanga Leela
-</span></b></span><span>Super</span><span>girl</span>
+<code>Info about Leela
+<8> 123
+<8 xml:lang="en" lang="en"><b><8>
+<8> 123_2 </8> Turanga Leela</8></b> второй текст </8>
+<8> Some Text </8> Last Text </8></code>
