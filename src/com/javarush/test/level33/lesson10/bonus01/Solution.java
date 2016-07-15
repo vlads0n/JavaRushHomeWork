@@ -1,9 +1,5 @@
 package com.javarush.test.level33.lesson10.bonus01;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import java.io.StringWriter;
 
 /* Комментарий внутри xml
 Реализовать метод toXmlWithComment, который должен возвращать строку - xml представление объекта obj.
@@ -24,46 +20,72 @@ import java.io.StringWriter;
     <second/>
 </first>
 */
+
+import org.w3c.dom.Comment;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.StringWriter;
+import java.util.regex.Pattern;
+
 public class Solution {
     public static String toXmlWithComment(Object obj, String tagName, String comment) {
-        String resultXML = null;
         try {
-            StringWriter stringWriter = new StringWriter();
             JAXBContext context = JAXBContext.newInstance(obj.getClass());
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            marshaller.marshal(obj, stringWriter);
+            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+            marshaller.marshal(obj, doc);
 
-            resultXML = stringWriter.toString();
-            String openTag = "<" + tagName;
-            String closingTag = "</" + tagName;
-            int indexOfOpenTag = resultXML.indexOf(openTag);
-            int indexOfClosingTag = resultXML.indexOf(closingTag);
-            int tagLength = tagName.length();
-            String commentary = "\t<!--" + comment + "-->\n\t";
+            NodeList nodes = doc.getElementsByTagName("*");
 
-            while (indexOfOpenTag != -1 && indexOfClosingTag != -1) {
-                if (indexOfOpenTag < indexOfClosingTag) {
-                    resultXML = resultXML.substring(0, indexOfOpenTag - 1) + commentary + resultXML.substring(indexOfOpenTag - 1);
-                    tagLength += commentary.length();
-                    indexOfOpenTag = resultXML.indexOf(tagName, tagLength + indexOfOpenTag);
-                    indexOfClosingTag = resultXML.indexOf(tagName, tagLength + indexOfClosingTag);
+            for (int i = 0; i < nodes.getLength(); i++) {
+                Node node = nodes.item(i);
+
+                if (node.getNodeName().equals(tagName)) {
+                    Comment com = doc.createComment(comment);
+                    node.getParentNode().insertBefore(com, node);
                 }
-                else if (indexOfOpenTag > indexOfClosingTag)
-                {
-                    resultXML = resultXML.substring(0, indexOfOpenTag - 2) + commentary + resultXML.substring(indexOfOpenTag - 2);
-                    tagLength += commentary.length();
-                    indexOfOpenTag = resultXML.indexOf(tagName, tagLength + indexOfOpenTag);
-                    indexOfClosingTag = resultXML.indexOf(tagName, tagLength + indexOfClosingTag);
-                }
+                replaceTextWithCDATA(node, doc);
             }
-        } catch (JAXBException e) {}
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
-        return resultXML;
+            StringWriter sw = new StringWriter();
+            transformer.transform(new DOMSource(doc), new StreamResult(sw));
+            return sw.toString();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static void replaceTextWithCDATA(Node node, Document doc) {
+        if ((node.getNodeType() == 3) && (Pattern.compile("[<>&'\"]").matcher(node.getTextContent()).find())) {
+            Node cnode = doc.createCDATASection(node.getNodeValue());
+            node.getParentNode().replaceChild(cnode, node);
+        }
+
+        NodeList list = node.getChildNodes();
+
+        for (int i = 0; i < list.getLength(); i++) {
+            replaceTextWithCDATA(list.item(i), doc);
+        }
     }
 
     public static void main(String[] args) {
-       String result = toXmlWithComment(new AnExample(), "needCDATA", "it's a comment - <needCDATA>");
+        String result = Solution.toXmlWithComment(new AnExample(), "needCDATA", "it's a comment - <needCDATA>");
         System.out.println(result);
     }
 }
