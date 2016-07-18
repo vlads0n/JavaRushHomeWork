@@ -50,4 +50,8 @@ public class Order
         ConsoleHelper.writeMessage(Dish.allDishesToString());
         dishes = ConsoleHelper.getAllDishesForOrder();
     }
+
+    public Tablet getTablet() {
+        return tablet;
+    }
 }

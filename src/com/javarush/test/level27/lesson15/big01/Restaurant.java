@@ -29,13 +29,14 @@ public class Restaurant
         cook1.addObserver(waitor);
         cook2.addObserver(waitor);
 
+        OrderManager orderManager = new OrderManager();
+
         List<Tablet> tablets = new ArrayList<>();
         Tablet tablet;
         for (int i = 0; i < 5; i++) {
             tablet = new Tablet(i + 1);
             tablets.add(tablet);
-            tablet.addObserver(cook1);
-            tablet.addObserver(cook2);
+            tablet.addObserver(orderManager);
         }
 
         RandomOrderGeneratorTask randomOrderGeneratorTask = new RandomOrderGeneratorTask(tablets, ORDER_CREATING_INTERVAL);
@@ -46,6 +47,10 @@ public class Restaurant
         } catch (InterruptedException e) {
         }
         thread.interrupt();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+        }
 
         DirectorTablet directorTablet = new DirectorTablet();
         directorTablet.printAdvertisementProfit();

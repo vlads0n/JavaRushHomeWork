@@ -26,7 +26,7 @@ public class Tablet extends Observable
     public void createOrder()
     {
         try {
-            final Order order = new Order(this);
+            Order order = new Order(this);
             orderToString(order);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Console is unavailable.");
@@ -51,7 +51,7 @@ public class Tablet extends Observable
 
     public void createTestOrder() {
         try {
-            final TestOrder order = new TestOrder(this);
+            TestOrder order = new TestOrder(this);
             orderToString(order);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Console is unavailable.");
