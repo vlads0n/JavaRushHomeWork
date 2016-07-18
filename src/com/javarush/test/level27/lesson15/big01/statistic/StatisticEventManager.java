@@ -103,4 +103,8 @@ public class StatisticEventManager {
         gregorianCalendar.set(Calendar.MILLISECOND, 0);
         return gregorianCalendar.getTime();
     }
+
+    public Set<Cook> getCooks() {
+        return cooks;
+    }
 }

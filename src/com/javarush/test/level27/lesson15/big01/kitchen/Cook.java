@@ -12,6 +12,7 @@ import java.util.Observable;
 public class Cook extends Observable
 {
     private String name;
+    private boolean isBusy;
 
     public Cook(String name)
     {
@@ -25,11 +26,21 @@ public class Cook extends Observable
     }
 
     public void startCookingOrder(Order order) {
+        isBusy = true;
         ConsoleHelper.writeMessage("Start cooking - " + order + ", cooking time " + order.getTotalCookingTime() + "min");
+        try {
+            Thread.currentThread().sleep(order.getTotalCookingTime() * 10);
+        } catch (InterruptedException e) {
+        }
         CookedOrderEventDataRow eventDataRow = new CookedOrderEventDataRow(order.getTablet().toString(), name, order.getTotalCookingTime() * 60, order.getDishes());
         StatisticEventManager.getInstance().register(eventDataRow);
 
         setChanged();
         notifyObservers(order);
+        isBusy = false;
+    }
+
+    public boolean isBusy() {
+        return isBusy;
     }
 }
