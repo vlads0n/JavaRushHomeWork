@@ -27,7 +27,7 @@ public class AdvertisementManager
         List<Advertisement> advertisements = new ArrayList<>();
 
         for (Advertisement advertisement : storage.list()) {
-            if (advertisement.getHits() > 0)
+            if (advertisement.getHits() > 0 && advertisement.getDuration() <= timeSeconds)
                 advertisements.add(advertisement);
         }
 
@@ -52,9 +52,6 @@ public class AdvertisementManager
         });
 
         advertisements = recursive(advertisements);
-
-        if (advertisements.isEmpty())
-            throw new NoVideoAvailableException();
 
         int totalAmount = 0;
         int totalDuration = 0;

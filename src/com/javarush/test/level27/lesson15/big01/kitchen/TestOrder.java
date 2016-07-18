@@ -18,7 +18,7 @@ public class TestOrder extends Order {
     }
 
     @Override
-    public void initDishes() {
+    public void initDishes() throws IOException {
         ConsoleHelper.writeMessage(Dish.allDishesToString());
         dishes = new ArrayList<>();
         dishes.addAll(Arrays.asList(Dish.values()));

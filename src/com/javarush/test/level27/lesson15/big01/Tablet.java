@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class Tablet extends Observable
 {
     public final int number;
-    public static Logger logger = Logger.getLogger(Tablet.class.getName());
+    private static Logger logger = Logger.getLogger(Tablet.class.getName());
 
     public Tablet(int number)
     {
@@ -26,7 +26,7 @@ public class Tablet extends Observable
     public void createOrder()
     {
         try {
-            Order order = new Order(this);
+            final Order order = new Order(this);
             orderToString(order);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Console is unavailable.");
@@ -51,7 +51,7 @@ public class Tablet extends Observable
 
     public void createTestOrder() {
         try {
-            TestOrder order = new TestOrder(this);
+            final TestOrder order = new TestOrder(this);
             orderToString(order);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Console is unavailable.");

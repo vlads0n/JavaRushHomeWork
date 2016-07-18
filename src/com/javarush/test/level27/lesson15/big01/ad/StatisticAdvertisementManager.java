@@ -1,8 +1,8 @@
 package com.javarush.test.level27.lesson15.big01.ad;
 
-import java.util.Comparator;
-import java.util.Set;
-import java.util.TreeSet;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Влад on 30.06.2016.
@@ -18,13 +18,8 @@ public class StatisticAdvertisementManager {
     private StatisticAdvertisementManager() {
     }
 
-    public Set<Advertisement> getActiveAdvertisement() {
-        Set<Advertisement> result = new TreeSet<>(new Comparator<Advertisement>() {
-            @Override
-            public int compare(Advertisement o1, Advertisement o2) {
-                return o1.getName().compareToIgnoreCase(o2.getName());
-            }
-        });
+    public List<Advertisement> getActiveAdvertisement() {
+        List<Advertisement> result = new ArrayList<>();
         for (Advertisement advertisement : advertisementStorage.list()) {
             if (advertisement.getHits() > 0)
                 result.add(advertisement);
@@ -32,13 +27,8 @@ public class StatisticAdvertisementManager {
         return result;
     }
 
-    public Set<Advertisement> getArchivedAdvertisement() {
-        Set<Advertisement> result = new TreeSet<>(new Comparator<Advertisement>() {
-            @Override
-            public int compare(Advertisement o1, Advertisement o2) {
-                return o1.getName().compareToIgnoreCase(o2.getName());
-            }
-        });
+    public List<Advertisement> getArchivedAdvertisement() {
+        List<Advertisement> result = new ArrayList<>();
         for (Advertisement advertisement : advertisementStorage.list()) {
             if (advertisement.getHits() == 0)
                 result.add(advertisement);

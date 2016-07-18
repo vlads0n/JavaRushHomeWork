@@ -5,9 +5,8 @@ import com.javarush.test.level27.lesson15.big01.ad.StatisticAdvertisementManager
 import com.javarush.test.level27.lesson15.big01.statistic.StatisticEventManager;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
+
 
 /**
  * Created by Влад on 28.06.2016.
@@ -35,12 +34,30 @@ public class DirectorTablet {
     }
 
     public void printActiveVideoSet() {
-        for (Advertisement advertisement : StatisticAdvertisementManager.getInstance().getActiveAdvertisement())
-            ConsoleHelper.writeMessage(advertisement.getName() + " - " + advertisement.getHits());
+        List<Advertisement> videoSet = StatisticAdvertisementManager.getInstance().getActiveAdvertisement();
+        Collections.sort(videoSet, new Comparator<Advertisement>() {
+            @Override
+            public int compare(Advertisement o1, Advertisement o2) {
+                return o1.getName().compareToIgnoreCase(o2.getName());
+            }
+        });
+        for (Advertisement advertisement : videoSet) {
+            ConsoleHelper.writeMessage(String.format("%s - %d",
+                    advertisement.getName(),
+                    advertisement.getHits()));
+        }
     }
 
     public void printArchivedVideoSet() {
-        for (Advertisement advertisement : StatisticAdvertisementManager.getInstance().getArchivedAdvertisement())
+        List<Advertisement> videoSet = StatisticAdvertisementManager.getInstance().getArchivedAdvertisement();
+        Collections.sort(videoSet, new Comparator<Advertisement>() {
+            @Override
+            public int compare(Advertisement o1, Advertisement o2) {
+                return o1.getName().compareToIgnoreCase(o2.getName());
+            }
+        });
+        for (Advertisement advertisement : videoSet) {
             ConsoleHelper.writeMessage(advertisement.getName());
+        }
     }
 }

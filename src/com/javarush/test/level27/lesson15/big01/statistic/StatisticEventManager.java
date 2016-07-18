@@ -32,7 +32,7 @@ public class StatisticEventManager {
         cooks.add(cook);
     }
 
-    private class StatisticStorage {
+    private static class StatisticStorage {
         private Map<EventType, List<EventDataRow>> map = new HashMap<>();
 
         private StatisticStorage() {
