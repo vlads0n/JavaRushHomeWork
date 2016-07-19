@@ -23,5 +23,7 @@
     <orderEntry type="library" name="com.webcohesion.enunciate:enunciate-java-json-client:2.3.0" level="application" />
     <orderEntry type="library" name="org.jsoup:jsoup:1.9.2" level="application" />
     <orderEntry type="library" name="com.bluecatcode.junit:junit-4.11-extended:1.0.4" level="application" />
+    <orderEntry type="library" name="annotations-2.0.1" level="application" />
+    <orderEntry type="library" name="org.apache.commons:commons-collections4:4.1" level="application" />
   </component>
 </module>
